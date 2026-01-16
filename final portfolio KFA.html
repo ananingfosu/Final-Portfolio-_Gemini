@@ -514,6 +514,91 @@
             transition: transform 0.1s ease-out;
             will-change: transform;
         }
+        /* --- WHATSAPP FLOAT --- */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            z-index: 5000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .whatsapp-float:hover {
+            transform: translateY(-5px);
+        }
+
+        .whatsapp-btn {
+            width: 60px;
+            height: 60px;
+            background-color: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            position: relative;
+            animation: pulse-green 2s infinite;
+        }
+
+        .whatsapp-btn img {
+            width: 35px;
+            height: 35px;
+            object-fit: contain;
+        }
+
+        .whatsapp-tag {
+            position: absolute;
+            right: 70px;
+            background: white;
+            color: #050505;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            opacity: 1; /* Always visible as per request */
+            transform: translateX(0);
+            transition: 0.3s;
+            pointer-events: none;
+        }
+
+        /* Tag Arrow */
+        .whatsapp-tag::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 6px 0 6px 6px;
+            border-style: solid;
+            border-color: transparent transparent transparent white;
+        }
+
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        @media (max-width: 768px) {
+            .whatsapp-float {
+                bottom: 20px;
+                right: 20px;
+            }
+            .whatsapp-btn {
+                width: 50px;
+                height: 50px;
+            }
+            .whatsapp-btn img {
+                width: 28px;
+                height: 28px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -529,6 +614,14 @@
     <div id="project-preview">
         <img src="" alt="Preview" id="preview-img">
     </div>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/YOUR_PHONE_NUMBER" class="whatsapp-float" target="_blank">
+        <span class="whatsapp-tag">Text me</span>
+        <div class="whatsapp-btn">
+            <img src="/assets/whatsappsocial.png" alt="WhatsApp">
+        </div>
+    </a>
 
     <div class="bg-glow"></div>
 
