@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kwame Fosu Ananing | Portfolio</title>
+    <link rel="icon" type="image/png" href="/assets/favicon.png">
+    <link rel="shortcut icon" href="/assets/favicon.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #050505;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1a1;
+            --accent: #ff6b00;
+            /* Glassmorphism Variables */
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-blur: blur(12px);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+            cursor: none !important; /* Hide default cursor */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- CUSTOM CURSOR --- */
+        #custom-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            pointer-events: none;
+            z-index: 10000; /* Above everything */
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease-out, width 0.3s ease, height 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #custom-cursor svg {
+            width: 100%;
+            height: 100%;
+            fill: var(--accent);
+            filter: drop-shadow(0 0 5px var(--accent));
+        }
+
+        /* Hover State for Cursor */
+        #custom-cursor.hovering {
+            width: 48px;
+            height: 48px;
+        }
+
+        /* --- PROJECT IMAGE PREVIEW (CURSOR FOLLOWER) --- */
+        #project-preview {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 320px;
+            height: 200px;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+            border-radius: 20px;
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.5) rotate(-10deg);
+            transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        #project-preview.active {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1) rotate(0deg);
+        }
+
+        #project-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* --- BACKGROUND GRADIENTS --- */
+        .bg-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 10% 10%, rgba(255, 107, 0, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 107, 0, 0.05) 0%, transparent 40%);
+        }
+
+        /* --- NAVIGATION (GLASS) --- */
+        .nav-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: var(--glass-blur);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .sq-icon {
+            width: 20px;
+            height: 20px;
+            background-color: var(--accent);
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: -0.02em;
+            margin-right: 4rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            background: var(--glass-bg);
+            padding: 8px 24px;
+            border-radius: 100px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover { color: var(--text-primary); }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 140px 5% 0 5%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-grid {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .left-column { max-width: 45%; }
+        .right-column {
+            max-width: 500px;
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .availability {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .headline {
+            font-size: clamp(2.5rem, 5vw, 5rem);
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -0.04em;
+        }
+
+        .subtext {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        /* --- BUTTONS --- */
+        .work-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--accent);
+            color: white;
+            padding: 14px 32px;
+            margin-bottom: 4rem;
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .work-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(255, 107, 0, 0.3); }
+
+        /* --- MARQUEE FEATURE --- */
+        .marquee-container {
+            margin-top: auto;
+            width: 100vw;
+            margin-left: -5%; /* Reset hero padding */
+            padding: 40px 0;
+            display: flex;
+            overflow: hidden;
+            user-select: none;
+            white-space: nowrap;
+            border-top: 1px solid var(--text-primary);
+            border-bottom: 1px solid var(--text-primary);
+        }
+
+        .marquee-content {
+            display: flex;
+            flex-shrink: 0;
+            padding-left: 20px;
+            animation: marquee-scroll 30s linear infinite;
+        }
+
+        .marquee-text {
+            font-size: clamp(4rem, 15vw, 12rem);
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            padding-right: 0.2em;
+        }
+
+        @keyframes marquee-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* --- SERVICES SECTION (GLASS CARDS) --- */
+        .section {
+            padding: 120px 5%;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 60px;
+            letter-spacing: -0.02em;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            padding: 40px;
+            border-radius: 30px;
+            transition: 0.4s;
+        }
+
+        .glass-card:hover {
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-10px);
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .card-text {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* --- PROJECTS SECTION --- */
+        .projects-section {
+            padding: 20px 5% 80px;
+        }
+
+        .project-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 0;
+            border-bottom: 1px solid var(--glass-border);
+            text-decoration: none;
+            color: white;
+            transition: 0.3s;
+            position: relative;
+            z-index: 2;
+        }
+
+        .project-item:hover {
+            padding-left: 20px;
+            border-color: var(--accent);
+        }
+
+        .project-info h3 { font-size: 2.5rem; font-weight: 800; }
+        .project-category { color: var(--accent); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; }
+
+        /* --- CONTACT SECTION --- */
+        .contact-box {
+            background: linear-gradient(135deg, var(--glass-bg), transparent);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: var(--glass-blur);
+            padding: 80px;
+            border-radius: 40px;
+            text-align: center;
+        }
+
+        .contact-box h2 { font-size: 4rem; margin-bottom: 20px; }
+        .contact-box p { color: var(--text-secondary); margin-bottom: 40px; }
+
+        /* --- MOBILE MENU & HAMBURGER --- */
+        #menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer !important;
+            padding: 5px;
+            z-index: 1002;
+        }
+
+        #menu-close {
+            display: none;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer !important;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 1024px) {
+            #menu-toggle { display: block; }
+            
+            /* Hamburger Animation */
+            .line-top, .line-middle, .line-bottom {
+                transform-origin: center;
+                transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.4s ease;
+            }
+
+            #menu-toggle.active .line-top {
+                transform: translateY(6px) rotate(45deg);
+            }
+
+            #menu-toggle.active .line-middle {
+                opacity: 0;
+            }
+
+            #menu-toggle.active .line-bottom {
+                transform: translateY(-6px) rotate(-45deg);
+            }
+            
+            .nav-menu { 
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: rgba(5, 5, 5, 0.95);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                border-radius: 0;
+                border: none;
+                border-left: 1px solid var(--glass-border);
+                transition: right 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+                z-index: 1001;
+                box-shadow: -20px 0 50px rgba(0,0,0,0.5);
+            }
+
+            .nav-menu.active {
+                right: 0;
+            }
+
+            .nav-link {
+                font-size: 1rem; /* Larger font for mobile */
+                margin: 12px 0;
+            }
+
+            .logo-text {
+                margin-right: 0;
+            }
+
+            #menu-close { display: block; }
+
+            .content-grid { flex-direction: column; gap: 40px; }
+            .left-column, .right-column { max-width: 100%; text-align: left; align-items: flex-start; align-self: flex-start; }
+            .right-column { max-width: 500px; }
+            .section-title { font-size: 2.5rem; }
+            .contact-box { padding: 40px; }
+            .contact-box h2 { font-size: 2.5rem; }
+            
+            /* Hide custom cursor/preview on mobile touch */
+            #custom-cursor, #project-preview { display: none; }
+            * { cursor: auto !important; }
+
+            /* Mobile Project Images */
+            .project-static-img {
+                display: block;
+                width: 100%;
+                height: 250px;
+                object-fit: cover;
+                border-radius: 12px;
+                margin-top: 20px;
+            }
+
+            .project-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .project-link {
+                align-self: flex-end;
+            }
+        }
+
+        /* Desktop Only */
+        @media (min-width: 1025px) {
+            .project-static-img {
+                display: none;
+            }
+        }
+
+        /* Mobile Only */
+        @media (max-width: 430px) {
+            .social-links {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
+            }
+        }
+
+        /* --- ANIMATIONS (New) --- */
+        .reveal-text {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .reveal-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Skewable Container Class */
+        .skew-content {
+            transition: transform 0.1s ease-out;
+            will-change: transform;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom Cursor -->
+    <div id="custom-cursor">
+        <svg viewBox="0 0 100 100">
+            <path d="M50 0 L58 42 L100 50 L58 58 L50 100 L42 58 L0 50 L42 42 Z" />
+        </svg>
+    </div>
+
+    <!-- Floating Project Preview -->
+    <div id="project-preview">
+        <img src="" alt="Preview" id="preview-img">
+    </div>
+
+    <div class="bg-glow"></div>
+
+    <nav class="nav-container">
+        <a href="#" class="logo-area">
+            <div class="sq-icon"></div>
+            <span class="logo-text">KFA</span>
+        </a>
+
+        <div class="nav-menu">
+            <a href="#about" class="nav-link">About</a>
+            <a href="#services" class="nav-link">Services</a>
+            <a href="#projects" class="nav-link">Projects</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div id="time-display" style="font-weight: 700; font-size: 0.8rem; letter-spacing: 1px;">KUMASI / 01:22 AM</div>
+            <button id="menu-toggle" aria-label="Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line class="line-top" x1="3" y1="6" x2="21" y2="6"></line>
+                    <line class="line-middle" x1="3" y1="12" x2="21" y2="12"></line>
+                    <line class="line-bottom" x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <header class="hero" id="about">
+        <main class="content-grid">
+            <div class="left-column">
+                <div class="availability">
+                    <span class="status-dot"></span>
+                    Available for Work
+                </div>
+                <h1 class="headline">Designer &<br>Developer</h1>
+            </div>
+            
+            <div class="right-column">
+                <p class="subtext">
+                    Hi, I'm Kwame Fosu Ananing – passionate about creating seamless digital experiences that connect and convert.
+                </p>
+                <a href="#projects" class="work-btn">
+                    See my works
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </a>
+            </div>
+        </main>
+
+        <div class="marquee-container">
+            <!-- First set for animation loop -->
+            <div class="marquee-content">
+                <span class="marquee-text">FRONTEND WEB DEVELOPMENT • UI&UX • GRAPHIC DESIGN •</span>
+                <span class="marquee-text">FRONTEND WEB DEVELOPMENT • UI&UX • GRAPHIC DESIGN •</span>
+            </div>
+            <!-- Duplicate for seamless scroll -->
+            <div class="marquee-content" aria-hidden="true">
+                <span class="marquee-text">FRONTEND WEB DEVELOPMENT • UI&UX • GRAPHIC DESIGN •</span>
+                <span class="marquee-text">FRONTEND WEB DEVELOPMENT • UI&UX • GRAPHIC DESIGN •</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="section" id="services">
+        <h2 class="section-title">Services</h2>
+        <div class="services-grid">
+            <div class="glass-card">
+                <div class="card-icon">✦</div>
+                <h3 class="card-title">Graphic Design</h3>
+                <p class="card-text">Creating compelling visual identities and marketing materials that communicate your brand story effectively.</p>
+            </div>
+            <div class="glass-card">
+                <div class="card-icon">◈</div>
+                <h3 class="card-title">UI/UX Design</h3>
+                <p class="card-text">Designing intuitive interfaces and seamless user journeys that drive engagement and conversion.</p>
+            </div>
+            <div class="glass-card">
+                <div class="card-icon">◎</div>
+                <h3 class="card-title">Frontend Web Development</h3>
+                <p class="card-text">Creating responsive, high-performance websites and web applications using modern frameworks and best practices.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="projects-section" id="projects">
+        <h2 class="section-title">Selected Works</h2>
+
+        <a target="_blank" href="https://wateriscool.vercel.app/" class="project-item" data-img="/assets/water_tracker_web_app.webp">
+            <div class="project-info">
+                <span class="project-category">Web Development / 2025</span>
+                <h3>Water Intake Tracker</h3>
+            </div>
+            <img src="/assets/water_tracker_web_app.webp" alt="Water Intake Tracker" class="project-static-img">
+            <div class="project-link">Live Demo →</div>
+        </a>
+        
+        <a target="_blank" href="https://dribbble.com/shots/25990015-Minimalist-Note-Taking-App-BOLD-NOTES-APP" class="project-item" data-img="/assets/bold_notes_ui_app.webp">
+            <div class="project-info">
+                <span class="project-category">UIUX Design / 2024</span>
+                <h3>Bold Notes App</h3>
+            </div>
+            <img src="/assets/bold_notes_ui_app.webp" alt="Bold Notes App" class="project-static-img">
+            <div class="project-link">UI Designs →</div>
+        </a>
+
+        <a target="_blank" href="https://github.com/ananingfosu/riceleaf-disease-pred" class="project-item" data-img="/assets/rice_disease_pred_image.webp">
+            <div class="project-info">
+                <span class="project-category">Python, Machine Learning / 2023</span>
+                <h3>Rice Leaf Disease Prediction</h3>
+            </div>
+            <img src="/assets/rice_disease_pred_image.webp" alt="Rice Leaf Disease Prediction" class="project-static-img">
+            <div class="project-link">Github Repo →</div>
+        </a>
+
+        <a target="_blank" href="https://vestate.netlify.app/" class="project-item" data-img="/assets/vestate_project_thumbnail.webp">
+            <div class="project-info">
+                <span class="project-category">Web Development / 2022</span>
+                <h3>Vestate Listing Website</h3>
+            </div>
+            <img src="/assets/vestate_project_thumbnail.webp" alt="Vestate Listing Website" class="project-static-img">
+            <div class="project-link">Live Demo →</div>
+        </a>
+    </section>
+
+    <section class="section" id="contact">
+        <div class="contact-box">
+            <span class="project-category" style="color: var(--accent)">Let's Talk</span>
+            <h2>Have a project in mind?</h2>
+            <p>I'm currently accepting new projects and collaborations.</p>
+            <a href="mailto:ananingfosu@gmail.com" class="work-btn" style="font-size: 1.2rem; padding: 20px 50px;">
+                Start a Conversation
+            </a>
+            
+            <div class="social-links" style="margin-top: 30px; display: flex; justify-content: center; row-gap: 5px; column-gap: 30px;">
+                <a href="https://www.linkedin.com/in/ananingfosu/" target="_blank" class="nav-link">LinkedIn</a>
+                <a href="https://dribbble.com/ananingfosu" target="_blank" class="nav-link">Dribbble</a>
+                <a href="https://x.com/AnaningFosu" target="_blank" class="nav-link">Twitter(X)</a>
+                <a href="https://github.com/ananingfosu" target="_blank" class="nav-link">Github</a>
+                <a href="https://www.pinterest.com/ananingfosu/" target="_blank" class="nav-link">Pinterest</a>
+            </div>
+        </div>
+    </section>
+
+    <footer style="padding: 40px 5%; border-top: 1px solid var(--glass-border); display: flex; justify-content: space-between; color: var(--text-secondary); font-size: 0.8rem; gap: 20px;">
+        <div> @2026 Kwame Fosu Ananing</div>
+        <div style="text-align: right;">Built with Passion in Kumasi, Ghana</div>
+    </footer>
+
+    <script>
+        const cursor = document.getElementById('custom-cursor');
+        const preview = document.getElementById('project-preview');
+        const previewImg = document.getElementById('preview-img');
+        
+        // Update time display
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: true 
+            });
+            const timeDisplay = document.getElementById('time-display');
+            if (timeDisplay) {
+                timeDisplay.textContent = `KUMASI / ${timeString}`;
+            }
+        }
+        
+        // Update time immediately and then every second
+        updateTime();
+        setInterval(updateTime, 1000);
+        
+        // Track mouse movement
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+
+            // Move cursor
+            cursor.style.left = x + 'px';
+            cursor.style.top = y + 'px';
+
+            // Move preview container
+            preview.style.left = x + 'px';
+            preview.style.top = y + 'px';
+        });
+
+        // Expand cursor on general hoverable elements
+        const hoverables = document.querySelectorAll('a, button, .glass-card');
+        
+        hoverables.forEach((el) => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+        });
+
+        // Specific logic for Project Item Hover
+        const projectItems = document.querySelectorAll('.project-item');
+
+        projectItems.forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                const imgUrl = item.getAttribute('data-img');
+                if (imgUrl) {
+                    previewImg.src = imgUrl;
+                    preview.classList.add('active');
+                }
+                cursor.classList.add('hovering');
+            });
+
+            item.addEventListener('mouseleave', () => {
+                preview.classList.remove('active');
+                cursor.classList.remove('hovering');
+            });
+        });
+
+        // Mobile Menu Logic
+        const menuToggle = document.getElementById('menu-toggle');
+        // Close button was removed by user, so we rely on menuToggle for closing as well
+        const navMenu = document.querySelector('.nav-menu');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        function toggleMenu() {
+            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        }
+
+        menuToggle.addEventListener('click', toggleMenu);
+
+        // Close menu when a link is clicked
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                menuToggle.classList.remove('active');
+            });
+        });
+
+        // --- ANIMATIONS ---
+
+        // 1. Text Reveal on Scroll
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Apply reveal classes and observe
+        const revealElements = document.querySelectorAll('h1, h2, h3, p, .nav-link, .work-btn, .project-item, .glass-card, .availability');
+        revealElements.forEach(el => {
+            el.classList.add('reveal-text');
+            observer.observe(el);
+        });
+
+        // 2. Skew Effect on Scroll
+        const skewContainers = document.querySelectorAll('.hero, .section, .projects-section');
+        let currentScroll = window.scrollY;
+        let skewVelocity = 0;
+        let ticking = false;
+
+        window.addEventListener('scroll', () => {
+            const newScroll = window.scrollY;
+            const velocity = newScroll - currentScroll;
+            currentScroll = newScroll;
+            
+            // Limit skew to avoid extreme distortion
+            skewVelocity = Math.max(Math.min(velocity * 0.05, 5), -5);
+
+
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    skewContainers.forEach(container => {
+                        container.style.transform = `skewY(${skewVelocity}deg)`;
+                    });
+                    ticking = false;
+                    
+                    // Reset skew smoothly when stopped
+                    setTimeout(() => {
+                        if (window.scrollY === currentScroll) {
+                            skewContainers.forEach(c => c.style.transform = 'skewY(0deg)');
+                        }
+                    }, 800);
+                });
+                ticking = true;
+            }
+        });
+        
+    </script>
+
+</body>
+</html>
