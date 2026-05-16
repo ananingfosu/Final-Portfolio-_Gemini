@@ -368,7 +368,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 40px 0;
-            border-bottom: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--accent);
             text-decoration: none;
             color: white;
             transition: 0.3s;
@@ -390,6 +390,70 @@
             margin-top: 12px;
             max-width: 600px;
             opacity: 0.8;
+        }
+
+        /* --- DESIGN SECTION --- */
+        .design-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+        }
+
+        .design-card {
+            display: block;
+            text-decoration: none;
+            color: white;
+            border-radius: 24px;
+            overflow: hidden;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            transition: 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+        }
+
+        .design-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+        }
+
+        .design-img-wrapper {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            overflow: hidden;
+        }
+
+        .design-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .design-card:hover .design-img-wrapper img {
+            transform: scale(1.05);
+        }
+
+        .design-card-content {
+            padding: 25px;
+        }
+
+        .design-card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .design-card-cat {
+            color: var(--accent);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .design-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* --- CONTACT SECTION --- */
@@ -671,7 +735,8 @@
         <div class="nav-menu">
             <a href="#about" class="nav-link">About</a>
             <a href="#services" class="nav-link">Services</a>
-            <a href="#projects" class="nav-link">Projects</a>
+            <a href="#projects" class="nav-link">Work</a>
+            <a href="#design" class="nav-link">Design</a>
             <a href="#contact" class="nav-link">Contact</a>
         </div>
 
@@ -747,7 +812,7 @@
     </section>
 
     <section class="projects-section" id="projects">
-        <h2 class="section-title">Selected Works</h2>
+        <h2 class="section-title">Development Projects</h2>
 
         <a target="_blank" href="https://wateriscool.vercel.app/" class="project-item" data-img="/assets/water_tracker_web_app.webp">
             <div class="project-info">
@@ -757,16 +822,6 @@
             </div>
             <img src="/assets/water_tracker_web_app.webp" alt="Water Intake Tracker" class="project-static-img">
             <div class="project-link">Live Demo →</div>
-        </a>
-        
-        <a target="_blank" href="https://dribbble.com/shots/25990015-Minimalist-Note-Taking-App-BOLD-NOTES-APP" class="project-item" data-img="/assets/bold_notes_ui_app.webp">
-            <div class="project-info">
-                <span class="project-category">UIUX Design / 2024</span>
-                <h3>Bold Notes App</h3>
-                <p class="project-context">Traditional note apps are often cluttered with features that distract from quick capture. I designed this high-contrast interface to prioritize speed and focus for rapid idea logging.</p>
-            </div>
-            <img src="/assets/bold_notes_ui_app.webp" alt="Bold Notes App" class="project-static-img">
-            <div class="project-link">UI Designs →</div>
         </a>
 
         <a target="_blank" href="https://github.com/ananingfosu/riceleaf-disease-pred" class="project-item" data-img="/assets/rice_disease_pred_image.webp">
@@ -788,6 +843,73 @@
             <img src="/assets/vestate_project_thumbnail.webp" alt="Vestate Listing Website" class="project-static-img">
             <div class="project-link">Live Demo →</div>
         </a>
+    </section>
+
+    <section class="section" id="design">
+        <h2 class="section-title">Design Gallery</h2>
+        <div class="design-grid">
+            <a href="https://dribbble.com/shots/27318861-Obsidian-Wallet-Mobile-App" target="_blank" class="design-card">
+                <div class="design-img-wrapper">
+                    <img src="/assets/obsidianwalletwebp.webp" alt="Obsidian Wallet Money Tracking App">
+                </div>
+                <div class="design-card-content">
+                    <span class="design-card-cat">UI/UX Design</span>
+                    <h3 class="design-card-title">Obsidian Wallet Money Tracking App</h3>
+                </div>
+            </a>
+
+            <a href="https://dribbble.com/shots/27381684-VITALIS-GENESIS-CLINIC-AND-HEALTH-APP" target="_blank" class="design-card">
+                <div class="design-img-wrapper">
+                    <img src="/assets/vitalisgenesisappui.webp" alt="Clinic and Health App UI">
+                </div>
+                <div class="design-card-content">
+                    <span class="design-card-cat">UI/UX Design</span>
+                    <h3 class="design-card-title">Vitalis Genesis Clinic and Health App UI</h3>
+                </div>
+            </a>
+
+            <a href="https://dribbble.com/shots/27365221-CLEANING-SERVICES-LANDING-PAGE" target="_blank" class="design-card">
+                <div class="design-img-wrapper">
+                    <img src="/assets/cleaningservicebannerui.webp" alt="Cleaning Services Landing Page">
+                </div>
+                <div class="design-card-content">
+                    <span class="design-card-cat">UI/UX Design</span>
+                    <h3 class="design-card-title">Cleaning Services Landing Page</h3>
+                </div>
+            </a>
+            
+            <a href="https://dribbble.com/shots/25990015-Minimalist-Note-Taking-App-BOLD-NOTES-APP" target="_blank" class="design-card">
+                <div class="design-img-wrapper">
+                    <img src="/assets/bold_notes_ui_app.webp" alt="Bold Notes App">
+                </div>
+                <div class="design-card-content">
+                    <span class="design-card-cat">UI/UX Design</span>
+                    <h3 class="design-card-title">Bold Notes App</h3>
+                </div>
+            </a>
+            </a>
+            
+            <a href="https://dribbble.com/shots/27365087-NORTHDEVON-RECRUITMENT-Landing-Page-Redesign" target="_blank" class="design-card">
+                <div class="design-img-wrapper">
+                    <img src="/assets/northdevonwebui.webp" alt="Northdevon Recruitment Web Ui">
+                </div>
+                <div class="design-card-content">
+                    <span class="design-card-cat">UI/UX Design</span>
+                    <h3 class="design-card-title">NorthDevon Recruitment Landing Page Redesign</h3>
+                </div>
+            </a>
+            </a>
+            
+            <a href="https://www.pinterest.com/ananingfosu/_created/" target="_blank" class="design-card">
+                <div class="design-img-wrapper">
+                    <img src="/assets/pinterestworks.png" alt="All Graphic Design Works">
+                </div>
+                <div class="design-card-content">
+                    <span class="design-card-cat">Graphic Design</span>
+                    <h3 class="design-card-title">View All Graphic Design Works</h3>
+                </div>
+            </a>
+        </div>
     </section>
 
     <section class="section" id="contact">
@@ -919,7 +1041,7 @@
         }, observerOptions);
 
         // Apply reveal classes and observe
-        const revealElements = document.querySelectorAll('h1, h2, h3, p, .nav-link, .work-btn, .project-item, .glass-card, .availability');
+        const revealElements = document.querySelectorAll('h1, h2, h3, p, .nav-link, .work-btn, .project-item, .glass-card, .availability, .design-card');
         revealElements.forEach(el => {
             el.classList.add('reveal-text');
             observer.observe(el);
