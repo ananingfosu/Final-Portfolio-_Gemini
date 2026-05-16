@@ -215,6 +215,7 @@
 
         .left-column { max-width: 45%; }
         .right-column {
+            margin-top: 55px;
             max-width: 500px;
             text-align: right;
             display: flex;
@@ -382,6 +383,14 @@
 
         .project-info h3 { font-size: 2.5rem; font-weight: 800; }
         .project-category { color: var(--accent); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; }
+        .project-context {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-top: 12px;
+            max-width: 600px;
+            opacity: 0.8;
+        }
 
         /* --- CONTACT SECTION --- */
         .contact-box {
@@ -477,7 +486,7 @@
 
             .content-grid { flex-direction: column; gap: 40px; }
             .left-column, .right-column { max-width: 100%; text-align: left; align-items: flex-start; align-self: flex-start; }
-            .right-column { max-width: 500px; }
+            .right-column { margin-top: unset; max-width: 500px; }
             .section-title { font-size: 2.5rem; }
             .contact-box { padding: 40px; }
             .contact-box h2 { font-size: 2.5rem; }
@@ -683,7 +692,7 @@
             <div class="left-column">
                 <div class="availability">
                     <span class="status-dot"></span>
-                    Available for Work
+                    Open to freelance collaborations
                 </div>
                 <h1 class="headline">Designer &<br>Developer</h1>
             </div>
@@ -744,6 +753,7 @@
             <div class="project-info">
                 <span class="project-category">Web Development / 2025</span>
                 <h3>Water Intake Tracker</h3>
+                <p class="project-context">Users often struggle to stay hydrated due to busy schedules. I built this minimalist tracker to provide a seamless, distraction-free way to maintain daily hydration goals.</p>
             </div>
             <img src="/assets/water_tracker_web_app.webp" alt="Water Intake Tracker" class="project-static-img">
             <div class="project-link">Live Demo →</div>
@@ -753,6 +763,7 @@
             <div class="project-info">
                 <span class="project-category">UIUX Design / 2024</span>
                 <h3>Bold Notes App</h3>
+                <p class="project-context">Traditional note apps are often cluttered with features that distract from quick capture. I designed this high-contrast interface to prioritize speed and focus for rapid idea logging.</p>
             </div>
             <img src="/assets/bold_notes_ui_app.webp" alt="Bold Notes App" class="project-static-img">
             <div class="project-link">UI Designs →</div>
@@ -762,6 +773,7 @@
             <div class="project-info">
                 <span class="project-category">Python, Machine Learning / 2023</span>
                 <h3>Rice Leaf Disease Prediction</h3>
+                <p class="project-context">Crop diseases often go undetected until it's too late for small-scale farmers. I developed a machine learning model that provides instant diagnosis via images, helping farmers protect their livelihoods.</p>
             </div>
             <img src="/assets/rice_disease_pred_image.webp" alt="Rice Leaf Disease Prediction" class="project-static-img">
             <div class="project-link">Github Repo →</div>
@@ -771,6 +783,7 @@
             <div class="project-info">
                 <span class="project-category">Web Development / 2022</span>
                 <h3>Vestate Listing Website</h3>
+                <p class="project-context">Finding verified property listings was a fragmented process for local renters. I built a unified real estate portal that centralizes listings and simplifies agent-client communication.</p>
             </div>
             <img src="/assets/vestate_project_thumbnail.webp" alt="Vestate Listing Website" class="project-static-img">
             <div class="project-link">Live Demo →</div>
@@ -924,7 +937,7 @@
             currentScroll = newScroll;
             
             // Limit skew to avoid extreme distortion
-            skewVelocity = Math.max(Math.min(velocity * 0.05, 5), -5);
+            skewVelocity = Math.max(Math.min(velocity * 0.015, 2), -2);
 
 
             if (!ticking) {
